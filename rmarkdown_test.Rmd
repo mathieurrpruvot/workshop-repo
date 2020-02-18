@@ -1,0 +1,39 @@
+---
+title: "Untitled"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Header One
+
+here is some explanation about what I'm doing. **Bold text here**
+
+List:
+
+* Banana
+* Apple
+* other
+
+$\sum{x^2}$
+
+
+```{r name_1}
+# comments
+x<-c(1,12,13)
+
+```
+
+Here is a hidden chunk:
+```{r, echo=FALSE}
+y<-x+4
+print(y)
+```
+
+
+```{r}
+bg_chem <- read.csv(file="data/BGchem2008data.csv")
+```
+
