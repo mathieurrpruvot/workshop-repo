@@ -4,5 +4,6 @@
 * kiwi
 * banana
 * apple
+* plum
 
 Spending the afternoon with Github
