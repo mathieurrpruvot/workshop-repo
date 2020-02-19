@@ -84,7 +84,7 @@ annual_catch_sockeye <- catch_long %>%
   group_by(species, Year) %>% #adds the grouping information to the data
   summarise(total_catch=sum(catch)) %>% 
   arrange(-total_catch)
-annual_catch
+annual_catch_sockeye
 ```
 
 
@@ -92,7 +92,7 @@ annual_catch
 ```{r}
 region_defs<-read.csv(url("https://knb.ecoinformatics.org/knb/d1/mn/v2/object/df35b.303.1", method = "libcurl"), stringsAsFactors = F) %>% 
                          select(code, mgmtArea)
-        head(reg?ion_defs)               
+        head(region_defs)               
 ```
 ```{r}
 catch_joined<-left_join(catch_long,region_defs,by=c("Region"="code"))
