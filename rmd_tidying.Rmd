@@ -52,7 +52,7 @@ pivot_longer(cols=-c(Region, Year),
   #the below could be more simplys done by
   #mutate(catch=catch*1000)
   rename(catch_thousands = catch) %>% 
-  nutate(catch=catch_thousands*1000) %>% 
+  mutate(catch=catch_thousands*1000) %>% 
   select(-catch_thousands)
 
 head(catch_long)
