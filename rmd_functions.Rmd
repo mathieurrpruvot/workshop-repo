@@ -11,7 +11,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 Source my functions
 ```{r}
-source(my_functions.R)
+source("my_functions.R")
 ```
 
 
