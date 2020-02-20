@@ -34,7 +34,12 @@ head(esc)
 
 ```{r}
 annual_esc<- esc %>%
-  separate(sampleDate, c("Year","Month","Day"),sep="-",remove=F) #separate the date into its components
-  
+  separate(sampleDate, c("Year","Month","Day"),sep="-",remove=F) %>%  #separate the date into its components
+  mutate(Year = as.numeric(Year),
+         Month= as.numeric(Month)) %>% 
+  group_by(Species, SASAP.Region, Year) %>% 
+  summarize(escapement = sum(DailyCount)) %>% 
+  filter(Species %in% c("Chinook","Sokeye","Chum","Coho","Pink"))
+  head(annual_esc)
 ```
 
