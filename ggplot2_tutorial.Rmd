@@ -39,7 +39,93 @@ annual_esc<- esc %>%
          Month= as.numeric(Month)) %>% 
   group_by(Species, SASAP.Region, Year) %>% 
   summarize(escapement = sum(DailyCount)) %>% 
-  filter(Species %in% c("Chinook","Sokeye","Chum","Coho","Pink"))
+  filter(Species %in% c("Chinook","Sockeye","Chum","Coho","Pink"))
   head(annual_esc)
+```
+# Data visualization
+
+## First look at the data
+
+Aes arguments are used for mapping variables to axis of the graph (incuding x,y,coor, size etc.)
+The specific visual aspect is fine tuned with geom
+
+
+```{r}
+ggplot(annual_esc, aes(x = Species, y= escapement)) +
+  geom_col(fill="blue")
+```
+
+
+```{r}
+ggplot(annual_esc, aes(x = Species, y= escapement, fill=SASAP.Region)) +
+  geom_col()
+```
+
+### Looking into the Kodiak region
+
+```{r}
+annual_esc %>% 
+  filter(SASAP.Region == "Kodiak") %>% 
+  ggplot(aes(x = Year, y= escapement,color=Species)) +
+  geom_line() + 
+  geom_point() + 
+  ylab("Escapement") + 
+  theme_bw() +
+  theme(plot.title = element_text(hjust=0.5), legend.position = "bottom") + #this needs to be after the theme_wb otherwise it gets overwritten
+  ggtitle("Salmon Annual Escapement for the Kodiak Region",)
+
+```
+
+### other example with saving a theme as object
+
+```{r}
+my_theme<-   theme_bw() +
+  theme(plot.title = element_text(hjust=0.5), 
+        legend.position = "bottom"
+        #,legend.title = element_blank() #to remove the legend title
+  )
+
+  
+annual_esc %>% 
+  filter(SASAP.Region == "Kodiak") %>% 
+  ggplot(aes(x = Year, y= escapement,color=Species)) +
+  geom_line() + 
+  geom_point() + 
+  ylab("Escapement") + 
+  my_theme + 
+  ggtitle("Salmon Annual Escapement for the Kodiak Region",)
+
+```
+
+## Playing with Facet
+
+```{r}
+ggplot(annual_esc, aes(x = Year, y = escapement, color = Species)) + 
+    geom_line() +
+    geom_point() +
+    scale_y_continuous(labels = comma) +
+    facet_wrap(~SASAP.Region, scales = "free_y", ncol = 2) +
+    ylab("Escapement") +
+    my_theme
+```
+
+## playing with patchwork
+
+patchwork package allows to add together multiple plots that were saved in objects
+
+```{r}
+p1<- ggplot(annual_esc, aes(x = Species, y= escapement, fill=SASAP.Region)) +
+  geom_col()
+p2<- annual_esc %>% 
+  filter(SASAP.Region == "Kodiak") %>% 
+  ggplot(aes(x = Year, y= escapement,color=Species)) +
+  geom_line() + 
+  geom_point() + 
+  ylab("Escapement") + 
+  my_theme + 
+  ggtitle("Salmon Annual Escapement for the Kodiak Region",)
+
+p1 + p2 + plot_annotation('This is a title', caption = 'made with patchwork') +
+  theme(#this function uses patchwork to put the graphs together
 ```
 
